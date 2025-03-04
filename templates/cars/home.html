@@ -1,0 +1,56 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+    <div class="hero">
+        <div class="hero-car-bg"></div>
+        <div class="hero-content">
+            <h1><i class="fas fa-taxi"></i> Point — Начни зарабатывать с такси уже сегодня!</h1>
+            <p>Аренда авто от 1600 руб/сутки — комфорт и стиль для твоего успеха.</p>
+            <a href="{% url 'catalog' %}" class="btn"><i class="fas fa-arrow-right"></i> Выбрать автомобиль</a>
+        </div>
+    </div>
+    <section class="benefits">
+        <h2>Почему выбирают Point?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <a href="{% url 'catalog' %}">
+                    <i class="fas fa-car"></i>
+                    <h3>Надёжные авто</h3>
+                    <p>Все машины с лицензией и полной документацией.</p>
+                </a>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-ruble-sign"></i>
+                <h3>Доступные цены</h3>
+                <p>От 1600 руб/сутки + день выдачи бесплатно.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-tools"></i>
+                <h3>Полное обслуживание</h3>
+                <p>ТО, резина и страховка за наш счёт.</p>
+            </div>
+            <div class="benefit-item">
+                <i class="fas fa-headset"></i>
+                <h3>Поддержка 24/7</h3>
+                <p>Круглосуточная техподдержка для вас.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Модальное окно для цен (можно убрать, если не нужно) -->
+    <div class="modal" id="price-modal">
+        <div class="modal-content">
+            <span class="close-modal">×</span>
+            <h2>Наши цены</h2>
+            <div class="price-info">
+                <p>Аренда автомобилей от <strong>1600 руб/сутки</strong>.</p>
+                <p>Гибкие тарифы:</p>
+                <ul>
+                    <li>Краткосрочная аренда: от 1600 руб/сутки</li>
+                    <li>Долгосрочная аренда: скидки до 20%</li>
+                    <li>Выкуп авто: от 1 года</li>
+                </ul>
+                <p>Точные цены уточняйте при выборе автомобиля.</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

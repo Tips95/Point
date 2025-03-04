@@ -1,0 +1,38 @@
+{% extends 'cars/base.html' %}
+{% block content %}
+    <section class="catalog-section">
+        <h1><i class="fas fa-car"></i> Каталог автомобилей</h1>
+        <p>Выберите идеальное авто для работы в такси</p>
+        <div class="cars">
+            {% for car in cars %}
+                <div class="car-card">
+                    <div class="car-image-wrapper">
+                        {% if car.image %}
+                            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="car-img">
+                        {% else %}
+                            <div class="no-image">
+                                <span>Фото отсутствует</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="car-info">
+                        <h3>{{ car.name }} <span class="car-year">({{ car.year }})</span></h3>
+                        <ul class="car-details">
+                            <li><i class="fas fa-gear"></i> КПП: <span>{{ car.get_transmission_display }}</span></li>
+                            <li><i class="fas fa-engine"></i> Двигатель: <span>{{ car.engine_volume }} л</span></li>
+                            <li><i class="fas fa-gas-pump"></i> Расход: <span>{{ car.fuel_consumption }} л/100 км</span></li>
+                            <li><i class="fas fa-car-side"></i> Привод: <span>{{ car.get_drive_type_display }}</span></li>
+                            <li><i class="fas fa-tachometer-alt"></i> Пробег: <span>{{ car.mileage }} км</span></li>
+                            <li class="price"><i class="fas fa-ruble-sign"></i> Цена: <span>{{ car.price_per_day }}/сутки</span></li>
+                        </ul>
+                        <a href="https://wa.me/79939099109?text=Здравствуйте, я хочу арендовать {{ car.name }} ({{ car.year }})" class="whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i> Связаться
+                        </a>
+                    </div>
+                </div>
+            {% empty %}
+                <p>Автомобили скоро появятся</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
