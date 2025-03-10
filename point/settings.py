@@ -1,13 +1,12 @@
 from pathlib import Path
-from decouple import config, Csv
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
-
+SECRET_KEY = 'django-insecure-cai^4c&0cc*z&*2w!&ft41$%noyzke)_0dpw@=pcrmwv2cqv)m'
+DEBUG = True  
+ALLOWED_HOSTS = ['178.209.127.121', 'localhost', '127.0.0.1']
 
 
 INSTALLED_APPS = [
@@ -91,9 +90,9 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
 SECURE_BROWSER_XSS_FILTER = True
 
 
