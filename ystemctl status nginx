@@ -1,0 +1,20 @@
+[0;1;32m●[0m gunicorn.service - gunicorn daemon for Django project
+     Loaded: loaded (/etc/systemd/system/gunicorn.service; enabled; vendor preset: enabled)
+     Active: [0;1;32mactive (running)[0m since Mon 2025-03-10 23:56:43 MSK; 10s ago
+   Main PID: 41789 (gunicorn)
+      Tasks: 4 (limit: 1067)
+     Memory: 86.2M
+        CPU: 679ms
+     CGroup: /system.slice/gunicorn.service
+             ├─41789 /root/Point/Point/venv/bin/python3 /root/Point/Point/venv/bin/gunicorn --workers 3 --bind unix:/root/Point/Point/point.sock point.wsgi:application
+             ├─41791 /root/Point/Point/venv/bin/python3 /root/Point/Point/venv/bin/gunicorn --workers 3 --bind unix:/root/Point/Point/point.sock point.wsgi:application
+             ├─41792 /root/Point/Point/venv/bin/python3 /root/Point/Point/venv/bin/gunicorn --workers 3 --bind unix:/root/Point/Point/point.sock point.wsgi:application
+             └─41793 /root/Point/Point/venv/bin/python3 /root/Point/Point/venv/bin/gunicorn --workers 3 --bind unix:/root/Point/Point/point.sock point.wsgi:application
+
+Mar 10 23:56:43 4378127-nb30630 systemd[1]: Started gunicorn daemon for Django project.
+Mar 10 23:56:43 4378127-nb30630 gunicorn[41789]: [2025-03-10 23:56:43 +0300] [41789] [INFO] Starting gunicorn 23.0.0
+Mar 10 23:56:43 4378127-nb30630 gunicorn[41789]: [2025-03-10 23:56:43 +0300] [41789] [INFO] Listening at: unix:/root/Point/Point/point.sock (41789)
+Mar 10 23:56:43 4378127-nb30630 gunicorn[41789]: [2025-03-10 23:56:43 +0300] [41789] [INFO] Using worker: sync
+Mar 10 23:56:43 4378127-nb30630 gunicorn[41791]: [2025-03-10 23:56:43 +0300] [41791] [INFO] Booting worker with pid: 41791
+Mar 10 23:56:43 4378127-nb30630 gunicorn[41792]: [2025-03-10 23:56:43 +0300] [41792] [INFO] Booting worker with pid: 41792
+Mar 10 23:56:43 4378127-nb30630 gunicorn[41793]: [2025-03-10 23:56:43 +0300] [41793] [INFO] Booting worker with pid: 41793
