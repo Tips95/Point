@@ -12,7 +12,6 @@ class Car(models.Model):
     osago = models.CharField(max_length=50, verbose_name="ОСАГО", default="1 год бесплатно")
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2, verbose_name="Цена за сутки")
     mileage = models.IntegerField(verbose_name="Пробег (км)", default=0)
-    image = models.ImageField(upload_to='cars/', blank=True, null=True, verbose_name="Фото")
 
     def __str__(self):
         return f"{self.name} ({self.year})"
@@ -20,3 +19,15 @@ class Car(models.Model):
     class Meta:
         verbose_name = "Автомобиль"
         verbose_name_plural = "Автомобили"
+
+class CarImage(models.Model):
+    car = models.ForeignKey(Car, related_name='images', on_delete=models.CASCADE, verbose_name="Автомобиль")
+    image = models.ImageField(upload_to='cars/', verbose_name="Фото")
+    is_main = models.BooleanField(default=False, verbose_name="Главное фото")
+
+    def __str__(self):
+        return f"Фото для {self.car.name}"
+
+    class Meta:
+        verbose_name = "Фото автомобиля"
+        verbose_name_plural = "Фото автомобилей"

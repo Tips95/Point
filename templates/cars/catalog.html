@@ -7,8 +7,16 @@
             {% for car in cars %}
                 <div class="car-card">
                     <div class="car-image-wrapper">
-                        {% if car.image %}
-                            <img src="{{ car.image.url }}" alt="{{ car.name }}" class="car-img">
+                        {% if car.images.exists %}
+                            <div class="slider">
+                                {% for image in car.images.all %}
+                                    <img src="{{ image.image.url }}" alt="{{ car.name }}" class="car-img {% if image.is_main %}active{% endif %}">
+                                {% endfor %}
+                                {% if car.images.count > 1 %}
+                                    <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
+                                    <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                                {% endif %}
+                            </div>
                         {% else %}
                             <div class="no-image">
                                 <span>Фото отсутствует</span>

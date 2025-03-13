@@ -69,5 +69,34 @@
             }
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.slider').forEach(slider => {
+                const images = slider.querySelectorAll('.car-img');
+                const prevBtn = slider.querySelector('.slider-prev');
+                const nextBtn = slider.querySelector('.slider-next');
+                let currentIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
+    
+                if (currentIndex < 0 && images.length > 0) {
+                    images[0].classList.add('active');
+                    currentIndex = 0;
+                }
+    
+                if (prevBtn && nextBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        images[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        images[currentIndex].classList.add('active');
+                    });
+                    nextBtn.addEventListener('click', () => {
+                        images[currentIndex].classList.remove('active');
+                        currentIndex = (currentIndex + 1) % images.length;
+                        images[currentIndex].classList.add('active');
+                    });
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
