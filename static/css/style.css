@@ -65,6 +65,7 @@ header {
     font-size: 0.9em;
     transition: color 0.3s, transform 0.3s;
     position: relative;
+    padding: 10px;
 }
 
 .nav-menu a:hover {
@@ -716,73 +717,39 @@ footer i {
     }
 }
 
-/* Адаптивность */
+/* Адаптивность для мобильных */
 @media (max-width: 768px) {
-    header {
-        padding: 10px 20px;
-        flex-wrap: wrap;
-    }
-
     .nav-menu {
-        flex-wrap: wrap;
-        justify-content: center;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 5px 10px;
     }
     .nav-menu a {
-        margin: 10px 0;
-        font-size: 1em;
-    }
-    .hero {
-        padding: 15px 15px 60px;
+        margin: 0 5px;
+        padding: 5px 8px;
+        font-size: 0.8em; /* Уменьшаем шрифт для меню */
     }
     .hero h1 {
-        font-size: 2.2em;
+        font-size: 2em; /* Уменьшаем с 3em до 2em */
     }
     .hero p {
-        font-size: 1.1em;
-    }
-    .catalog-section, .conditions-section {
-        padding: 110px 15px 60px;
-    }
-    .catalog-section h1, .conditions-section h1 {
-        font-size: 2em;
-    }
-    .cars {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        font-size: 1em; /* Уменьшаем с 1.3em до 1em */
+        max-width: 90%; /* Увеличиваем ширину для читаемости */
     }
 }
 
 @media (max-width: 480px) {
     .nav-menu a {
-        font-size: 0.9em;
-    }
-    .logo-img {
-        max-height: 35px;
+        margin: 0 3px;
+        padding: 4px 6px;
+        font-size: 0.7em; /* Ещё меньше для узких экранов */
     }
     .hero h1 {
-        font-size: 1.8em;
+        font-size: 1.6em; /* Ещё меньше для очень узких экранов */
     }
     .hero p {
-        font-size: 1em;
-    }
-    .conditions-content li {
-        font-size: 1em;
-    }
-    .car-card {
-        padding: 15px;
-    }
-    .car-card h3 {
-        font-size: 1.5em;
-    }
-    .car-details li {
         font-size: 0.9em;
-    }
-    .car-image-wrapper {
-        height: auto;
-        max-height: 300px;
-    }
-    .slider-prev, .slider-next {
-        padding: 5px;
-        font-size: 0.8em;
     }
 }
 

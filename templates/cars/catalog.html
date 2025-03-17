@@ -41,6 +41,9 @@
                         <a href="https://wa.me/79939099109?text=Здравствуйте, я хочу арендовать {{ car.name }} ({{ car.year }})" class="whatsapp-btn" target="_blank">
                             <i class="fab fa-whatsapp"></i> Связаться
                         </a>
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'delete_car' car.id %}"><i class="fas fa-trash-alt"></i> Удалить</a>
+                        {% endif %}
                     </div>
                 </div>
             {% empty %}
