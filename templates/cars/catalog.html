@@ -8,13 +8,18 @@
                 <div class="car-card">
                     <div class="car-image-wrapper">
                         {% if car.images.exists %}
-                            <div class="slider">
+                            <div class="slider" data-car-id="{{ car.id }}">
                                 {% for image in car.images.all %}
-                                    <img src="{{ image.image.url }}" alt="{{ car.name }}" class="car-img {% if image.is_main %}active{% endif %}">
+                                    <img src="{{ image.image.url }}" alt="{{ car.name }}" class="car-img {% if image.is_main %}active{% endif %}" data-full="{{ image.image.url }}">
                                 {% endfor %}
                                 {% if car.images.count > 1 %}
                                     <button class="slider-prev"><i class="fas fa-chevron-left"></i></button>
                                     <button class="slider-next"><i class="fas fa-chevron-right"></i></button>
+                                    <div class="thumbnails">
+                                        {% for image in car.images.all %}
+                                            <img src="{{ image.image.url }}" alt="{{ car.name }} thumbnail" class="thumbnail {% if image.is_main %}active{% endif %}" data-index="{{ forloop.counter0 }}">
+                                        {% endfor %}
+                                    </div>
                                 {% endif %}
                             </div>
                         {% else %}
@@ -43,4 +48,14 @@
             {% endfor %}
         </div>
     </section>
+
+    <!-- Модальное окно для увеличенного фото -->
+    <div class="image-modal" id="image-modal">
+        <span class="close-modal">×</span>
+        <div class="modal-slider">
+            <!-- Слайдер внутри модального окна будет заполняться через JS -->
+        </div>
+        <button class="modal-prev"><i class="fas fa-chevron-left"></i></button>
+        <button class="modal-next"><i class="fas fa-chevron-right"></i></button>
+    </div>
 {% endblock %}

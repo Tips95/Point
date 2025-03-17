@@ -40,12 +40,13 @@
     </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // Отступ для main
             const header = document.querySelector("header");
             const main = document.querySelector("main");
             const headerHeight = header.offsetHeight;
             main.style.paddingTop = `${headerHeight}px`;
 
-            // Модальное окно для цен (только если есть на странице)
+            // Модальное окно для цен (если есть)
             const priceModal = document.getElementById("price-modal");
             if (priceModal) {
                 const closePriceModal = priceModal.querySelector(".close-modal");
@@ -67,36 +68,155 @@
                     }
                 });
             }
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
+
+            // Слайдеры на странице
             document.querySelectorAll('.slider').forEach(slider => {
                 const images = slider.querySelectorAll('.car-img');
+                const thumbnails = slider.querySelectorAll('.thumbnail');
                 const prevBtn = slider.querySelector('.slider-prev');
                 const nextBtn = slider.querySelector('.slider-next');
                 let currentIndex = Array.from(images).findIndex(img => img.classList.contains('active'));
-    
+                let startX = 0;
+
                 if (currentIndex < 0 && images.length > 0) {
                     images[0].classList.add('active');
+                    if (thumbnails.length > 0) thumbnails[0].classList.add('active');
                     currentIndex = 0;
                 }
-    
+
+                const updateSlider = (newIndex) => {
+                    images[currentIndex].classList.remove('active');
+                    thumbnails[currentIndex]?.classList.remove('active');
+                    currentIndex = newIndex;
+                    images[currentIndex].classList.add('active');
+                    thumbnails[currentIndex]?.classList.add('active');
+                };
+
+                const showNext = () => {
+                    updateSlider((currentIndex + 1) % images.length);
+                };
+
+                const showPrev = () => {
+                    updateSlider((currentIndex - 1 + images.length) % images.length);
+                };
+
                 if (prevBtn && nextBtn) {
-                    prevBtn.addEventListener('click', () => {
-                        images[currentIndex].classList.remove('active');
-                        currentIndex = (currentIndex - 1 + images.length) % images.length;
-                        images[currentIndex].classList.add('active');
-                    });
-                    nextBtn.addEventListener('click', () => {
-                        images[currentIndex].classList.remove('active');
-                        currentIndex = (currentIndex + 1) % images.length;
-                        images[currentIndex].classList.add('active');
-                    });
+                    prevBtn.addEventListener('click', showPrev);
+                    nextBtn.addEventListener('click', showNext);
                 }
+
+                slider.addEventListener('touchstart', e => startX = e.touches[0].clientX);
+                slider.addEventListener('touchend', e => {
+                    const endX = e.changedTouches[0].clientX;
+                    if (startX - endX > 50) showNext();
+                    else if (endX - startX > 50) showPrev();
+                });
+
+                // Клик по thumbnails
+                thumbnails.forEach(thumbnail => {
+                    thumbnail.addEventListener('click', () => {
+                        const index = parseInt(thumbnail.getAttribute('data-index'));
+                        updateSlider(index);
+                    });
+                });
+
+                // Клик по фото для открытия модального окна
+                images.forEach((image, index) => {
+                    image.addEventListener('click', () => {
+                        const modal = document.getElementById('image-modal');
+                        const modalSlider = modal.querySelector('.modal-slider');
+                        modalSlider.innerHTML = ''; // Очищаем предыдущий контент
+
+                        // Заполняем модальный слайдер всеми фото машины
+                        images.forEach((img, i) => {
+                            const modalImg = document.createElement('img');
+                            modalImg.src = img.getAttribute('data-full');
+                            modalImg.classList.add('modal-img');
+                            if (i === index) modalImg.classList.add('active');
+                            modalSlider.appendChild(modalImg);
+                        });
+
+                        modal.style.display = 'flex';
+                        initModalSlider(modal, index, images.length);
+                    });
+                });
             });
+
+            // Закрытие и управление модальным окном
+            const imageModal = document.getElementById('image-modal');
+            if (imageModal) {
+                const closeModal = imageModal.querySelector('.close-modal');
+
+                // Обработчик для клика на десктопе
+                closeModal.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    imageModal.style.display = 'none';
+                });
+
+                // Обработчик для тача на мобильных
+                closeModal.addEventListener('touchstart', (e) => {
+                    e.preventDefault(); // Предотвращаем конфликт с другими событиями
+                    imageModal.style.display = 'none';
+                });
+
+                window.addEventListener('click', (event) => {
+                    if (event.target === imageModal) {
+                        imageModal.style.display = 'none';
+                    }
+                });
+            }
+
+            // Инициализация слайдера в модальном окне
+            function initModalSlider(modal, initialIndex, totalImages) {
+                const modalSlider = modal.querySelector('.modal-slider');
+                const modalImages = modalSlider.querySelectorAll('.modal-img');
+                const prevBtn = modal.querySelector('.modal-prev');
+                const nextBtn = modal.querySelector('.modal-next');
+                let currentIndex = initialIndex;
+                let startX = 0;
+
+                const updateModalSlider = (newIndex) => {
+                    modalImages[currentIndex].classList.remove('active');
+                    currentIndex = newIndex;
+                    modalImages[currentIndex].classList.add('active');
+                };
+
+                const showModalNext = () => {
+                    updateModalSlider((currentIndex + 1) % totalImages);
+                };
+
+                const showModalPrev = () => {
+                    updateModalSlider((currentIndex - 1 + totalImages) % totalImages);
+                };
+
+                // Очищаем старые обработчики
+                prevBtn.removeEventListener('click', showModalPrev);
+                nextBtn.removeEventListener('click', showModalNext);
+                modalSlider.removeEventListener('touchstart', () => {});
+                modalSlider.removeEventListener('touchend', () => {});
+
+                if (totalImages > 1) {
+                    prevBtn.style.display = 'block';
+                    nextBtn.style.display = 'block';
+                    prevBtn.addEventListener('click', showModalPrev);
+                    nextBtn.addEventListener('click', showModalNext);
+
+                    modalSlider.addEventListener('touchstart', e => {
+                        e.stopPropagation(); // Предотвращаем влияние на закрытие окна
+                        startX = e.touches[0].clientX;
+                    });
+                    modalSlider.addEventListener('touchend', e => {
+                        e.stopPropagation(); // Предотвращаем конфликт с закрытием
+                        const endX = e.changedTouches[0].clientX;
+                        if (startX - endX > 50) showModalNext();
+                        else if (endX - startX > 50) showModalPrev();
+                    });
+                } else {
+                    prevBtn.style.display = 'none';
+                    nextBtn.style.display = 'none';
+                }
+            }
         });
     </script>
-
 </body>
 </html>

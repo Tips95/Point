@@ -50,6 +50,7 @@ header {
     transform: scale(1.05);
 }
 
+
 .nav-menu {
     display: flex;
     align-items: center;
@@ -308,6 +309,10 @@ header {
     padding: 10px;
     box-sizing: border-box;
     transition: transform 0.4s ease;
+    cursor: pointer; /* Указываем, что можно кликнуть */
+    max-height: 250px; /* Ограничиваем высоту изображения */
+    width: auto;
+    margin: 0 auto;
 }
 
 .car-card:hover .car-img {
@@ -322,6 +327,32 @@ header {
     font-size: 1.2em;
     font-style: italic;
     background: linear-gradient(135deg, #e9ecef 0%, #d9dfe5 100%);
+}
+
+.thumbnails {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.3s ease, border 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.thumbnail.active {
+    opacity: 1;
+    border: 2px solid #ff8c00;
+}
+
+.thumbnail:hover {
+    opacity: 1;
 }
 
 .car-info {
@@ -596,20 +627,109 @@ footer i {
     color: #ff8c00;
 }
 
+/* Модальное окно для фото */
+.image-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.full-image {
+    max-width: 90%;
+    max-height: 90vh;
+    object-fit: contain;
+}
+
+.image-modal .close-modal {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 30px;
+    color: #fff;
+    cursor: pointer;
+}
+
+
+/* Модальный слайдер */
+.modal-slider {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: hidden;
+}
+
+.modal-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.modal-img.active {
+    opacity: 1;
+    position: relative;
+}
+
+.modal-prev, .modal-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    padding: 15px;
+    cursor: pointer;
+    z-index: 10;
+    transition: background 0.3s ease;
+    font-size: 1.2em;
+}
+
+.modal-prev:hover, .modal-next:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-prev {
+    left: 10px;
+}
+
+.modal-next {
+    right: 10px;
+    
+}
+@media (max-width: 768px) {
+    .modal-prev, .modal-next {
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     header {
-        flex-direction: column;
         padding: 10px 20px;
+        flex-wrap: wrap;
     }
+
     .nav-menu {
-        margin-top: 10px;
         flex-wrap: wrap;
         justify-content: center;
     }
     .nav-menu a {
-        margin: 8px 12px;
-        font-size: 0.8em;
+        margin: 10px 0;
+        font-size: 1em;
     }
     .hero {
         padding: 15px 15px 60px;
@@ -633,8 +753,7 @@ footer i {
 
 @media (max-width: 480px) {
     .nav-menu a {
-        margin: 6px 10px;
-        font-size: 0.75em;
+        font-size: 0.9em;
     }
     .logo-img {
         max-height: 35px;
@@ -647,6 +766,36 @@ footer i {
     }
     .conditions-content li {
         font-size: 1em;
+    }
+    .car-card {
+        padding: 15px;
+    }
+    .car-card h3 {
+        font-size: 1.5em;
+    }
+    .car-details li {
+        font-size: 0.9em;
+    }
+    .car-image-wrapper {
+        height: auto;
+        max-height: 300px;
+    }
+    .slider-prev, .slider-next {
+        padding: 5px;
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 768px) {
+    .car-image-wrapper {
+        max-height: 200px; /* Меньше для мобильных */
+    }
+    .car-img {
+        max-height: 150px;
+    }
+    .thumbnail {
+        width: 40px;
+        height: 40px;
     }
 }
 
